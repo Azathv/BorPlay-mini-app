@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navo — O‘z ohangingni tingla</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(180deg, #fff8e1, #e0f7fa);
+      color: #3e2723;
+      text-align: center;
+    }
+    header {
+      background: linear-gradient(90deg, #fdd835, #0288d1);
+      padding: 15px;
+      color: white;
+      font-size: 1.5em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+    .player {
+      margin-top: 60px;
+    }
+    .song-title {
+      font-size: 1.3em;
+      margin: 20px 0;
+      font-weight: bold;
+    }
+    audio {
+      width: 80%;
+      outline: none;
+      margin-bottom: 20px;
+    }
+    .controls button {
+      background: #fdd835;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      margin: 10px;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: #3e2723;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .controls button:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    🎵 Navo — O‘z ohangingni tingla
+  </header>
+
+  <div class="player">
+    <div class="song-title" id="song-title">Dil so‘zi — Maftuna</div>
+    <audio id="audio" src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav"></audio>
+
+    <div class="controls">
+      <button id="prev">⏮️</button>
+      <button id="play">▶️</button>
+      <button id="next">⏭️</button>
+    </div>
+  </div>
+
+  <script>
+    const songs = [
+      { title: "Dil so‘zi — Maftuna", src: "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars3.wav" },
+      { title: "Ona yurt — Avaz", src: "https://www2.cs.uic.edu/~i101/SoundFiles/CantinaBand3.wav" },
+      { title: "Sevgi nidosi — Jasur", src: "https://www2.cs.uic.edu/~i101/SoundFiles/ImperialMarch60.wav" }
+    ];
+
+    let currentIndex = 0;
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('play');
+    const nextBtn = document.getElementById('next');
+    const prevBtn = document.getElementById('prev');
+    const songTitle = document.getElementById('song-title');
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = '⏸️';
+      } else {
+        audio.pause();
+        playBtn.textContent = '▶️';
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % songs.length;
+      loadSong(currentIndex);
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+      loadSong(currentIndex);
+    });
+
+    function loadSong(index) {
+      const song = songs[index];
+      audio.src = song.src;
+      songTitle.textContent = song.title;
+      audio.play();
+      playBtn.textContent = '⏸️';
+    }
+  </script>
+</body>
+</html>
